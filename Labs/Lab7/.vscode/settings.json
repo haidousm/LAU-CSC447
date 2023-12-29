@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "pthread_barrier.h": "c",
+        "random": "c"
+    }
+}

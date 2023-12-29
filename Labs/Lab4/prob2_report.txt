@@ -1,0 +1,23 @@
+Number of processes 1
+-------------
+Approximated PI: 3.14144, True PI: 3.14159
+Wallclock time elapsed: 1.27536300 seconds
+--------------------------
+
+Number of processes 2
+-------------
+Approximated PI: 3.14128, True PI: 3.14159
+Wallclock time elapsed: 0.61088400 seconds
+--------------------------
+
+Number of processes 4
+-------------
+Approximated PI: 3.14144, True PI: 3.14159
+Wallclock time elapsed: 0.32809700 seconds
+--------------------------
+
+N       | 1 | 2     | 4
+Speedup | 1 | 2.087 | 3.887
+
+With N = 1e8, we witness major speedups with using dual and quad cores. With such a large N, 
+it is expected to overcome the MPI overhead and start witnessing actual significant speedups.

@@ -1,0 +1,61 @@
+Number of processes 1
+-------------
+Local result of 0 is PRIME.
+2147483647 is PRIME
+Wallclock time elapsed: 0.00017500 seconds
+--------------------------
+
+Number of processes 2
+-------------
+Local result of 0 is PRIME.
+Local result of 1 is PRIME.
+2147483647 is PRIME
+Wallclock time elapsed: 0.00027800 seconds
+--------------------------
+
+Number of processes 4
+-------------
+Local result of 0 is PRIME.
+Local result of 1 is PRIME.
+Local result of 2 is PRIME.
+Local result of 3 is PRIME.
+2147483647 is PRIME
+Wallclock time elapsed: 0.00023000 seconds
+--------------------------
+
+// here, the largest prime less than 2^31 (so it fits in a int data type) was used to be able to present any noticable speedup
+// and overcome the MPI overhead we've been noticing in previous labs
+
+// # of processors: 1 | 2     | 4 
+// speedup          1 | 0.629 | 0.760
+
+// although 4 processors still does not overcome the MPI overhead, 
+// it performs significantly better than its 2 processor counterpart
+// if i had access to a higher number of cores, i'd hypothesize we would've finally witnessed a speedup > 1Number of processes 1
+-------------
+
+Number of processes 1
+-------------
+Local result of 0 is not PRIME because it is divisible by 2699.
+2147483641 is not PRIME
+Wallclock time elapsed: 0.00005300 seconds
+--------------------------
+
+Number of processes 2
+-------------
+Local result of 0 is not PRIME because it is divisible by 2699.
+Local result of 1 is PRIME.
+2147483641 is not PRIME
+Wallclock time elapsed: 0.00022800 seconds
+--------------------------
+
+Number of processes 4
+-------------
+Local result of 0 is not PRIME because it is divisible by 2699.
+Local result of 1 is PRIME.
+Local result of 2 is PRIME.
+Local result of 3 is PRIME.
+2147483641 is not PRIME
+Wallclock time elapsed: 0.00023600 seconds
+--------------------------
+

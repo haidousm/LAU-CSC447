@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "mpi.h"
+
+#define M 1000
+
+int main(int argc, char *argv[]) {
+  int size, rank;
+
+  int U[M];
+
+  int V[10];
+
+  MPI_Init(&argc, &argv);
+
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+  int *ans_row = (int *)malloc(M * sizeof(int));
+
+  int v_i = 0;
+  MPI_Scatter(V, 1, MPI_INT, &v_i, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+  if (rank == 0) {
+    for (int i = 0; i < M; i++) {
+      ans_row[i] = U[i] * v_i;
+      MPI_Send(&(U[i]), 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
+    }
+  } else if (rank < size - 1) {
+    MPI_Status status;
+    for (int i = 0; i < M; i++) {
+      int u_i = 0;
+      MPI_Recv(&u_i, 1, MPI_INT, rank - 1, 0, MPI_COMM_WORLD, &status);
+
+      ans_row[i] = u_i * v_i;
+
+      MPI_Send(&u_i, 1, MPI_INT, rank + 1, 0, MPI_COMM_WORLD);
+    }
+  } else {
+    for (int i = 0; i < M; i++) {
+      int u_i = 0;
+      MPI_Recv(&u_i, 1, MPI_INT, rank - 1, 0, MPI_COMM_WORLD, &status);
+      ans_row[i] = u_i * v_i;
+    }
+  }
+
+  int **transposed_ans = (int **)malloc(10 * sizeof(int *));
+  for (int i = 0; i < 10; i++) {
+    transposed_ans[i] = (int *)malloc(M * sizeof(int));
+  }
+
+  MPI_Gather(ans_row, M, MPI_INT, transposed_ans, M, MPI_INT, 0,
+             MPI_COMM_WORLD);
+
+  if (rank == 0) {
+    int **ans = (int **)malloc(M * sizeof(int *));
+    for (int i = 0; i < M; i++) {
+      ans[i] = (int *)malloc(10 * sizeof(int));
+    }
+
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < M; j++) {
+        ans[j][i] = transposed_ans[i][j];
+      }
+    }
+  }
+
+  free(transposed_ans);
+  free(ans);
+  free(ans_row);
+
+  MPI_Finalize();
+
+  return (0);
+}

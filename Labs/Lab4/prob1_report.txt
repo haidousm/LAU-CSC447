@@ -1,0 +1,22 @@
+Number of processes 1
+-------------
+Process 0 found J = 10 such that F(J) = 3070
+Wallclock time elapsed: 0.00005600 seconds
+--------------------------
+
+Number of processes 2
+-------------
+Process 0 found J = 10 such that F(J) = 3070
+Wallclock time elapsed: 0.00017400 seconds
+--------------------------
+
+Number of processes 4
+-------------
+Process 0 found J = 10 such that F(J) = 3070
+Wallclock time elapsed: 0.00022100 seconds
+--------------------------
+
+N       | 1 | 2    | 4
+Speedup | 1 | .321 | .253
+
+This particular test case did not exhibit any speedups and was overtaken by MPI's overhead.
